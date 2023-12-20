@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +21,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-+&eaayzhn2lk90@e54z_(um-&5rkv!t#6sh26#)n971-m(ng-+'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG, cast=bool')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='*').split()
 
 
 # Application definition
@@ -76,12 +77,11 @@ WSGI_APPLICATION = 'todo_app.wsgi.application'
 DATABASES = {
     'default': {
         "ENGINE": 'django.db.backends.postgresql',
-        "NAME": "todo_app",
-        "USER": "esen",
-        "PASSWORD":1,
-        "HOST": "127.0.0.1",
+        "NAME": config("NAME"),
+        "USER": config("USER"),
+        "PASSWORD": config("PASSWORD"),
+        "HOST": config("HOST"),
         "PORT": "5432"
-
     }
 }
 
